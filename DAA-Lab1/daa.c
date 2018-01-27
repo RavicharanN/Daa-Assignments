@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include<time.h>
 
-#define RED   "\x1B[31m"
+#define RED   "\x1B[31m"  // Define terminal colors.
 #define GRN   "\x1B[32m"
 #define YEL   "\x1B[33m"
 #define BLU   "\x1B[34m"
@@ -10,29 +10,30 @@
 
 // A function to generate a random matrix.
 int **createMatrix(int n) {
-  srand(time(0)); //Seed random number generator.
-  int  **a = (int **)malloc(n * sizeof(int*)) ;
+  srand(time(0)); // Seed random number generator.
+  int  **a = (int **)malloc(n * sizeof(int*)) ; // Dynamic allocation
   int i,j;
   for(i = 0;i<n;i++){
     a[i] = (int *)malloc(n*sizeof(int));
     for(j = 0;j<n;j++){
-      a[i][j] = rand()%100;
+      a[i][j] = rand()%100;  // Allocate random integers to the spaces in the array
     }
   }
   return a;
 }
-
+// A funtion to print te matrix after creation
 void printMatrix(int ** matrix,int n) {
   int i,j;
   printf("\n");
   for(i = 0;i<n;i++) {
     for(j = 0;j<n;j++)
-      printf("%2d ",matrix[i][j]);
+      printf("%2d ",matrix[i][j]);  // %2d is used to keep the rows aligned
     printf("\n");
   }
   return;
 }
-
+// This function find the longest sorted sequence in an array.
+// Todo : Add Algorithm 
 void findPartition(int *a,int n) {
   int indexAscendSort_first[111],indexAscendSort_second[111];
   int indexDescendSort_first[111],indexDescendSort_second[111];
@@ -105,7 +106,7 @@ void findPartition(int *a,int n) {
   }
   return;
 }
-
+// Sends all the rows one after the other to the find partion function.
 void printRowsSorted(int ** matrix,int n) {
   int i,j;
   printf("\n");
@@ -115,14 +116,14 @@ void printRowsSorted(int ** matrix,int n) {
   }
   return;
 }
-
+// Sends all the diagonals to the findPartion functions one after the other.
 void printDiagonalSorted(int **matrix,int n) {
-  int* b = (int *)malloc(n*sizeof(int));
-  int* c = (int *)malloc(n*sizeof(int));
+  int* b = (int *)malloc(n*sizeof(int));  // Dynamic allocation
+  int* c = (int *)malloc(n*sizeof(int));  
   int i,j;
   for(i = 0;i<n;i++) {
-    b[i] = matrix[i][i];
-    c[i] = matrix[i][n-i-1];
+    b[i] = matrix[i][i];      // First diagonal is stored in b. 
+    c[i] = matrix[i][n-i-1];  // Second diagonal is sstored in c.
   }
   printf(YEL"First diagonal sorted list:\n"RESET);
   findPartition(b,n);
