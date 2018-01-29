@@ -13,25 +13,26 @@ int **createMatrix(int n) {
   srand(time(0)); // Seed random number generator.
   int  **a = (int **)malloc(n * sizeof(int*)) ; // Dynamic allocation
   int i,j;
-  for(i = 0;i<n;i++){
+  for(i = 0;i < n;i++){
     a[i] = (int *)malloc(n*sizeof(int));
-    for(j = 0;j<n;j++){
+    for(j = 0;j < n;j++)
       a[i][j] = rand()%100;  // Allocate random integers to the spaces in the array
-    }
   }
   return a;
 }
+
 // A funtion to print te matrix after creation
 void printMatrix(int ** matrix,int n) {
   int i,j;
   printf("\n");
-  for(i = 0;i<n;i++) {
-    for(j = 0;j<n;j++)
+  for(i = 0;i < n;i++) {
+    for(j = 0;j < n;j++)
       printf("%2d ",matrix[i][j]);  // %2d is used to keep the rows aligned
     printf("\n");
   }
   return;
 }
+
 // This function find the longest sorted sequence in an array.
 // Todo : Add Algorithm 
 void findPartition(int *a,int n) {
@@ -41,16 +42,18 @@ void findPartition(int *a,int n) {
   int tempFirst,tempSecond,tempSize;
   int ka = 0,kd =0;
   int i,j;
-  if(n==1) {
+  if(n == 1) {
     printf("None\n");
     return;
   }
-    
   // Sorted in ascending order
   for(i = 0;i < n;i++) {
+    if(n_aSort > n/2) // Optmize for best and avg cases.
+      goto jump;      //
+    
     tempFirst = i;
     tempSize = 1;
-    for(j = i+1;j<n;j++) {
+    for(j = i+1;j < n;j++) {
       if(a[j] >= a[j-1]) {
         tempSize++;
         tempSecond = j;
@@ -71,10 +74,13 @@ void findPartition(int *a,int n) {
     }
   }
   // Sorted in descending order
-  for( i = 0;i<n;i++) {
+  for( i = 0;i < n;i++) {
+    if(n_dSort > n/2) // Optmize for best and avg cases.
+      goto jump;      //
+
     tempFirst = i;
     tempSize = 1;
-    for( j = i+1;j<n;j++) {
+    for( j = i+1;j < n;j++) {
       if( a[j] <= a[j-1] ) {
         tempSize++;
         tempSecond = j;
@@ -94,39 +100,42 @@ void findPartition(int *a,int n) {
       indexDescendSort_second[kd] = tempSecond;
     }
   }
-  // Print the longest sorted array
+  
+  jump: // Printing the longest sorted array.
   if(n_aSort >= n_dSort) {  
     for(j = 0;j<=ka;j++) {
-      for(i = indexAscendSort_first[j];i<=indexAscendSort_second[j];i++)
-        (i==indexAscendSort_second[j])?(printf("%d",a[i])):(printf("%d,",a[i])); // Conditional_Statement - If i is on the last index do not print the ','.
-      printf("\n");
+      for(i = indexAscendSort_first[j];i <= indexAscendSort_second[j];i++)
+        (i == indexAscendSort_second[j]) ? (printf("%d",a[i])) : (printf("%d,",a[i])); // Conditional_Statement - If i is on the last index do not print the ','.
+      printf(BLU" -A.O \n"RESET);
     }
   }
   if (n_dSort >= n_aSort) {
-    for(j =0;j<=kd;j++) {
-      for( i = indexDescendSort_first[j];i<=indexDescendSort_second[j];i++)
-        (i==indexDescendSort_second[j]) ? (printf("%d",a[i])) : (printf("%d,",a[i])); // Conditional_Statement - If i is on the last index do not print the ','.
-      printf("\n");
+    for(j = 0;j <= kd;j++) {
+      for( i = indexDescendSort_first[j];i <= indexDescendSort_second[j];i++)
+        (i == indexDescendSort_second[j]) ? (printf("%d",a[i])) : (printf("%d,",a[i])); // Conditional_Statement - If i is on the last index do not print the ','.
+      printf(BLU" -D.O \n"RESET);
     }
   }
   return;
 }
+
 // Sends all the rows one after the other to the find partion function.
 void printRowsSorted(int ** matrix,int n) {
   int i,j;
   printf("\n");
-  for(i = 0;i<n;i++) {
-    printf(BLU"Sorted Sequences for row %d :\n" RESET,i);
+  for(i = 0;i < n;i++) {
+    printf(GRN"Sorted Sequences for row %d :\n" RESET,i);
     findPartition(matrix[i],n);
   }
   return;
 }
+
 // Sends all the diagonals to the findPartion functions one after the other.
 void printDiagonalSorted(int **matrix,int n) {
   int* b = (int *)malloc(n*sizeof(int));  // Dynamic allocation
   int* c = (int *)malloc(n*sizeof(int));  
   int i,j;
-  for(i = 0;i<n;i++) {
+  for(i = 0;i < n;i++) {
     b[i] = matrix[i][i];      // First diagonal is stored in b. 
     c[i] = matrix[i][n-i-1];  // Second diagonal is sstored in c.
   }
