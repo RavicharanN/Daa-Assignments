@@ -187,6 +187,33 @@ int main(int argc, char const *argv[]) {
   scanf("%d",&n);
   int ** matrix;
   matrix = createMatrix(n);
+
+  // Block for best case
+  // matrix = (int **)malloc(n * sizeof(int*)) ;
+  // time_eval += 1; 
+  // for(int i = 0;i<n;i++) {
+  //   time_eval += 3;
+  //   matrix[i] = (int *)malloc(n * sizeof(int)) ;
+  //   for(j = 0;j<n;j++) {
+  //     time_eval += 3;
+  //     matrix[i][j] = j + 1;
+  //   }
+  // }
+  // End of block
+
+  // Block for worst case
+  // matrix = (int **)malloc(n * sizeof(int*)) ;
+  // time_eval += 1; 
+  // for(int i = 0;i<n;i++) {
+  //   time_eval += 4;
+  //   matrix[i] = (int *)malloc(n * sizeof(int)) ;
+  //   for(j = 0;j<n;j++) {
+  //     time_eval += 4;
+  //     matrix[i][j] = j%2 + 1;
+  //   }
+  // }
+  //End of block
+
   time_eval += 1;
   printMatrix(matrix,n);
   printRowsSorted(matrix,n);
