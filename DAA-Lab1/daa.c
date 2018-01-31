@@ -56,7 +56,7 @@ void findPartition(int *a,int n) {
   }
   // Sorted in ascending order
   for(i = 0;i < n;i++) {
-    if(n_aSort > n/2) {  // Optmize for best and avg cases.
+    if(n_aSort > n/2 && n>3) {  // Optmize for best and avg cases.
       time_eval += 1;
       goto jump;
     } 
@@ -91,7 +91,7 @@ void findPartition(int *a,int n) {
   // Sorted in descending order
   for( i = 0;i < n;i++) {
     time_eval += 3;
-    if(n_dSort > n/2) { // Optimize for best case and avg case.
+    if(n_dSort > n/2 && n>3) { // Optimize for best case and avg case.
       time_eval += 1;
       goto jump;
     } 
