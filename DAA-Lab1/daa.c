@@ -41,12 +41,17 @@ void findPartition(int *a,int n) {
   int tempFirst,tempSecond,tempSize;
   int ka = 0,kd =0;
   int i,j;
+  if(n==1) {
+    printf("None\n");
+    return;
+  }
+    
   // Sorted in ascending order
-  for(i = 0;i < n-1;i++) {
+  for(i = 0;i < n;i++) {
     tempFirst = i;
     tempSize = 1;
     for(j = i+1;j<n;j++) {
-      if( a[j] >= a[j-1]) {
+      if(a[j] >= a[j-1]) {
         tempSize++;
         tempSecond = j;
       }
@@ -66,7 +71,7 @@ void findPartition(int *a,int n) {
     }
   }
   // Sorted in descending order
-  for( i = 0;i<n-1;i++) {
+  for( i = 0;i<n;i++) {
     tempFirst = i;
     tempSize = 1;
     for( j = i+1;j<n;j++) {
@@ -93,14 +98,14 @@ void findPartition(int *a,int n) {
   if(n_aSort >= n_dSort) {  
     for(j = 0;j<=ka;j++) {
       for(i = indexAscendSort_first[j];i<=indexAscendSort_second[j];i++)
-        printf("%d,",a[i]);
+        (i==indexAscendSort_second[j])?(printf("%d",a[i])):(printf("%d,",a[i])); // Conditional_Statement - If i is on the last index do not print the ','.
       printf("\n");
     }
   }
   if (n_dSort >= n_aSort) {
     for(j =0;j<=kd;j++) {
       for( i = indexDescendSort_first[j];i<=indexDescendSort_second[j];i++)
-        printf("%d,",a[i]);
+        (i==indexDescendSort_second[j]) ? (printf("%d",a[i])) : (printf("%d,",a[i])); // Conditional_Statement - If i is on the last index do not print the ','.
       printf("\n");
     }
   }
