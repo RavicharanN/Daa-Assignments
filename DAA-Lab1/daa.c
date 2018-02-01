@@ -44,8 +44,8 @@ void printMatrix(int ** matrix,int n) {
 // Todo : Add Algorithm 
 void findPartition(int *a,int n) {
   int ka = 0,kd =0;
-  int *indexAscendSort_first = (int *)malloc((ka+1)*sizeof(int)) ;
-  int *indexDescendSort_first = (int *)malloc((kd+1)*sizeof(int)) ;
+  int *indexDescendSort_first = (int *)malloc((n)*sizeof(int)) ;
+  int *indexAscendSort_first = (int *)malloc((n)*sizeof(int)) ;
   int n_aSort = 1, n_dSort = 1;
   int tempFirst,tempSize;
   int i,j;
