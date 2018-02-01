@@ -43,11 +43,11 @@ void printMatrix(int ** matrix,int n) {
 // This function find the longest sorted sequence in an array.
 // Todo : Add Algorithm 
 void findPartition(int *a,int n) {
-  int indexAscendSort_first[111],indexAscendSort_second[111];
-  int indexDescendSort_first[111],indexDescendSort_second[111];
-  int n_aSort = 1, n_dSort = 1;
-  int tempFirst,tempSecond,tempSize;
   int ka = 0,kd =0;
+  int *indexAscendSort_first = (int *)malloc((ka+1)*sizeof(int)) ;
+  int *indexDescendSort_first = (int *)malloc((kd+1)*sizeof(int)) ;
+  int n_aSort = 1, n_dSort = 1;
+  int tempFirst,tempSize;
   int i,j;
   if(n == 1) {
     time_eval += 1;
@@ -55,86 +55,76 @@ void findPartition(int *a,int n) {
     return;
   }
   // Sorted in ascending order
-  for(i = 0;i < n;i++) {
-    if(n_aSort > n/2 && n>3) {  // Optmize for best and avg cases.
-      time_eval += 1;
-      goto jump;
-    } 
-    tempFirst = i;
-    tempSize = 1;
-    for(j = i+1;j < n;j++) {
-      time_eval += 3;
-      if(a[j] >= a[j-1]) {
-        tempSize++;
-        tempSecond = j;
-        time_eval += 3;
+  n_aSort = 1;
+  ka = 0;
+  tempSize = 1;
+  tempFirst = 0; 
+  for(i = 1;i < n;i++) {
+    if(a[i] >= a[i-1])  // If in AO, increment the size.
+      tempSize++;
+    else {             // Else check cases.
+      if(tempSize > n_aSort) {  
+        ka = 0;        // Reset the counter to zero.
+        n_aSort = tempSize;
+        indexAscendSort_first[ka] = tempFirst;
       }
-      else
-        break;
-    }
-    if(tempSize > n_aSort) {
-      ka = 0;
-      indexAscendSort_first[ka] = tempFirst;
-      indexAscendSort_second[ka] = tempSecond;
-      n_aSort = tempSize;
-      time_eval += 5;
-    }
-    else if (tempSize == n_aSort) {
-      ka++;
-      indexAscendSort_first[ka] = tempFirst;
-      time_eval += 1; // To locate the 'ka'th index. 
-      indexAscendSort_second[ka] = tempSecond;  
-      time_eval += 1; // To locate the 'ka'th index.
-      time_eval += 4;
+      else if(tempSize == n_aSort) {   
+        ka++;         // Store in an array - Incrememnt the pointer.
+        indexAscendSort_first[ka] = tempFirst;
+      }
+      tempSize = 1;   // Reset if AO is broken.
+      tempFirst = i;  // Reset is AO is broken.
     }
   }
+  if(tempSize > n_aSort) {  // Store the indices if the loop never goes into the else statement.
+    ka = 0;
+    n_aSort = tempSize;
+    indexAscendSort_first[ka] = tempFirst;
+  }
+  else if(tempSize == n_aSort) {
+    ka++;
+    indexAscendSort_first[ka] = tempFirst;
+  }
+
   // Sorted in descending order
-  for( i = 0;i < n;i++) {
-    time_eval += 3;
-    if(n_dSort > n/2 && n>3) { // Optimize for best case and avg case.
-      time_eval += 1;
-      goto jump;
-    } 
-    tempFirst = i;
-    tempSize = 1;
-    time_eval += 2;
-    for( j = i+1;j < n;j++) {
-      time_eval += 3;
-      if( a[j] <= a[j-1] ) {
-        time_eval += 3;
-        tempSize++;
-        tempSecond = j;
+  n_dSort = 1;
+  kd= 0;
+  tempSize = 1;
+  tempFirst = 0; 
+  for(i = 1;i < n;i++) {
+    if(a[i] <= a[i-1])  // If in DO, increment the size.
+      tempSize++;
+    else {             // Else check cases.
+      if(tempSize > n_dSort) {
+        kd = 0;        // Reset the counter to zero.
+        n_dSort = tempSize;
+        indexDescendSort_first[kd] = tempFirst;
       }
-      else
-        break;
-    }
-    if(tempSize > n_dSort) {
-      kd = 0;
-      indexDescendSort_first[kd] = tempFirst;
-      time_eval += 1;
-      indexDescendSort_second[kd] = tempSecond;
-      time_eval += 1;
-      n_dSort = tempSize;
-      time_eval += 5;
-    }
-    else if( tempSize == n_dSort) {
-      kd++;
-      indexDescendSort_first[kd] = tempFirst;
-      time_eval += 1;
-      indexDescendSort_second[kd] = tempSecond;
-      time_eval += 1;
-      time_eval += 4;
+      else if(tempSize == n_dSort) {
+        kd++;         // Increment the counter.
+        indexDescendSort_first[kd] = tempFirst;
+      }
+      tempSize = 1;   // Reset if DO is broken.
+      tempFirst = i;  // Reset is DO is broken.
     }
   }
-  
-  jump: // Printing the longest sorted array.
+  if(tempSize > n_dSort) { // Store the indices if the loop never goes into the else statement.
+    kd = 0;
+    n_dSort = tempSize;
+    indexDescendSort_first[kd] = tempFirst;
+  }
+  else if(tempSize == n_dSort) {
+    kd++;
+    indexDescendSort_first[kd] = tempFirst;
+  }  
+  // Printing the longest sorted array.
   if(n_aSort >= n_dSort) {  
     time_eval += 1; 
     for(j = 0;j<=ka;j++) {
       time_eval += 3;
-      for(i = indexAscendSort_first[j];i <= indexAscendSort_second[j];i++) {
+      for(i = indexAscendSort_first[j];i < indexAscendSort_first[j]+n_aSort;i++) {
         time_eval += 4;
-        (i == indexAscendSort_second[j]) ? (printf("%d",a[i])) : (printf("%d,",a[i])); // Conditional_Statement - If i is on the last index do not print the ','.
+        (i == indexAscendSort_first[j]+n_aSort-1) ? (printf("%d",a[i])) : (printf("%d,",a[i])); // Conditional_Statement - If i is on the last index do not print the ','.
       }   
       printf(BLU" -A.O \n"RESET);
     }
@@ -143,9 +133,9 @@ void findPartition(int *a,int n) {
     time_eval += 1;
     for(j = 0;j <= kd;j++) {
       time_eval += 3;
-      for( i = indexDescendSort_first[j];i <= indexDescendSort_second[j];i++) {
+      for( i = indexDescendSort_first[j];i < indexDescendSort_first[j]+n_dSort;i++) {
         time_eval += 3; 
-        (i == indexDescendSort_second[j]) ? (printf("%d",a[i])) : (printf("%d,",a[i])); // Conditional_Statement - If i is on the last index do not print the ','.
+        (i == indexDescendSort_first[j]+n_dSort-1) ? (printf("%d",a[i])) : (printf("%d,",a[i])); // Conditional_Statement - If i is on the last index do not print the ','.
       }
       printf(BLU" -D.O \n"RESET);
     }
