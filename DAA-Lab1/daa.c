@@ -59,31 +59,40 @@ void findPartition(int *a,int n) {
   ka = 0;
   tempSize = 1;
   tempFirst = 0; 
+  time_eval += 4; 
   for(i = 1;i < n;i++) {
-    if(a[i] >= a[i-1])  // If in AO, increment the size.
+    time_eval += 3;
+    if(a[i] >= a[i-1]) { // If in AO, increment the size.
+      time_eval+=2;
       tempSize++;
+    } 
     else {             // Else check cases.
       if(tempSize > n_aSort) {  
         ka = 0;        // Reset the counter to zero.
         n_aSort = tempSize;
         indexAscendSort_first[ka] = tempFirst;
+        time_eval += 4;
       }
       else if(tempSize == n_aSort) {   
         ka++;         // Store in an array - Incrememnt the pointer.
         indexAscendSort_first[ka] = tempFirst;
+        time_eval += 3;
       }
       tempSize = 1;   // Reset if AO is broken.
       tempFirst = i;  // Reset is AO is broken.
+      time_eval  += 3;
     }
   }
   if(tempSize > n_aSort) {  // Store the indices if the loop never goes into the else statement.
     ka = 0;
     n_aSort = tempSize;
     indexAscendSort_first[ka] = tempFirst;
+    time_eval += 4;
   }
   else if(tempSize == n_aSort) {
     ka++;
     indexAscendSort_first[ka] = tempFirst;
+    time_eval += 3;
   }
 
   // Sorted in descending order
@@ -91,31 +100,40 @@ void findPartition(int *a,int n) {
   kd= 0;
   tempSize = 1;
   tempFirst = 0; 
+  time_eval += 4;
   for(i = 1;i < n;i++) {
-    if(a[i] <= a[i-1])  // If in DO, increment the size.
+    time_eval += 3;
+    if(a[i] <= a[i-1]) { // If in DO, increment the size.
       tempSize++;
+      time_eval += 2;
+    } 
     else {             // Else check cases.
       if(tempSize > n_dSort) {
         kd = 0;        // Reset the counter to zero.
         n_dSort = tempSize;
         indexDescendSort_first[kd] = tempFirst;
+        time_eval += 4;
       }
       else if(tempSize == n_dSort) {
         kd++;         // Increment the counter.
         indexDescendSort_first[kd] = tempFirst;
+        time_eval += 3;
       }
       tempSize = 1;   // Reset if DO is broken.
       tempFirst = i;  // Reset is DO is broken.
+      time_eval += 2;
     }
   }
   if(tempSize > n_dSort) { // Store the indices if the loop never goes into the else statement.
     kd = 0;
     n_dSort = tempSize;
     indexDescendSort_first[kd] = tempFirst;
+    time_eval += 4;
   }
   else if(tempSize == n_dSort) {
     kd++;
     indexDescendSort_first[kd] = tempFirst;
+    time_eval += 3;
   }  
   // Printing the longest sorted array.
   if(n_aSort >= n_dSort) {  
