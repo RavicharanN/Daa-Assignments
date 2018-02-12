@@ -83,9 +83,12 @@ int recFunc(int **statusMatrix,int **matrix,int *a,int k,int i, int j,int n) {
 
 // Creates necessary elements for the recursive function.
 int isTraversable(int **matrix,int n) {
-  int least,i,j,least_row[5],least_col[5],k,count;
+  int least,i,j,k,count;
+  int *least_row = (int *)malloc((n*n + 1)*sizeof(int));
+  int *least_col = (int *)malloc((n*n + 1)*sizeof(int));
   int *a = (int *)malloc(n*n*sizeof(int)); 
   int **statusMatrix = (int **)malloc(n*sizeof(int *)); // Status matrix keeps track of the visisted elements.
+  
   for(i = 0;i<n;i++) {
     statusMatrix[i] = (int *)malloc(n*(sizeof(int)));
     for(j = 0;j<n;j++) {
@@ -116,9 +119,8 @@ int isTraversable(int **matrix,int n) {
   } // The position of the least element is obtained.
 
   sortArray(a,n*n);    // Sorts the array
-   //if(a[0] == a[n*n-1]) 
-   //  return 1;          
-  
+  if(a[0] == a[n*n-1]) 
+    return 1;          
   if(count > 1) {
     for(i = 0;i<=count;i++) 
      return recFunc(statusMatrix,matrix,a,1,least_row[count],least_col[count],n);
@@ -150,7 +152,9 @@ void passMatrix(int **matrix,int n,int k) {
           printf("%d ",a[a_i][a_j]);
         printf("\n");
       }
-      if(isTraversable(a,k)) {
+      int res = isTraversable(a,k);
+      printf("%d\n",res);
+      if(res) {
         printf("left - %d, right - %d",i,j);
       }
       // end of for loop
@@ -170,6 +174,7 @@ int main(int argc, char const *argv[]) {
       scanf("%d",&matrix[i][j]);
   } 
   printMatrix(matrix,n);
+  
   passMatrix(matrix,n,3); // To-Do : Add a subMatrix generator fucntion 
   return 0;
 }
