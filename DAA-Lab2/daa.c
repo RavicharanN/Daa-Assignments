@@ -57,7 +57,6 @@ int recFunc(int **statusMatrix,int **matrix,int *a,int k,int i, int j,int n) {
     time_eval += 1;
     return 1;              // If all the elements in the subMatrix are equal,then return without calling the recursive function
   }
-  
   statusMatrix[i][j] = 1;  // If the elements is visited, then mark the corresponding entry in the matrix as 1.
   int flag = 0;
   time_eval += 2;
@@ -205,22 +204,22 @@ int main(int argc, char const *argv[]) {
   int **matrix;
   int n,i,j;
   scanf("%d",&n);
-  matrix = createMatrix(n);
-  // Random CAse
-  // matrix = (int **)malloc(n*sizeof(int *));
-  // for(i = 0;i<n;i++) {
-  //   matrix[i] = (int *)malloc(n*sizeof(int));
-  //   for(j = 0;j<n;j++) 
-  //     scanf("%d",&matrix[i][j]);
-  // } 
-  // End Of block
-  // Best CAse 
+  // matrix = createMatrix(n);
+  // Custom input
   matrix = (int **)malloc(n*sizeof(int *));
   for(i = 0;i<n;i++) {
     matrix[i] = (int *)malloc(n*sizeof(int));
     for(j = 0;j<n;j++) 
-      matrix[i][j] = 5;
-  }
+      scanf("%d",&matrix[i][j]);
+  } 
+  // End Of block
+  // Best CAse 
+  // matrix = (int **)malloc(n*sizeof(int *));
+  // for(i = 0;i<n;i++) {
+  //   matrix[i] = (int *)malloc(n*sizeof(int));
+  //   for(j = 0;j<n;j++) 
+  //     matrix[i][j] = 5;
+  // }
   // End of block
   printMatrix(matrix,n);
   passMatrix(matrix,n,3); // To-Do : Add a subMatrix generator fucntion 
