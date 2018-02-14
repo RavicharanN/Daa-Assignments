@@ -257,7 +257,7 @@ int main(int argc, char const *argv[]) {
   // End of Best Case block
   printMatrix(matrix,n);
   passMatrix(matrix,n,3); // To-Do : Add a subMatrix generator function
-  time_eval = time_eval/(float)10000;
+  time_eval = time_eval/(float)100000;
   printf("The time taken for computation is %f\n",time_eval); 
   return 0;
 }
