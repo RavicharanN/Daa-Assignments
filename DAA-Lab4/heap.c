@@ -8,40 +8,58 @@ float timeEval = 0;
 
 int main()
 {
-	int n,*arr,i;
+	int z;
+	FILE * fp;
+	fp = fopen("time.txt","w");
 
-	scanf("%d",&n); //scan number of elements in the input
-
-	arr = (int *)malloc(n * sizeof(int));
-
-	for (i = 0; i < n; ++i)
+	for( z = 3;z<=70;z = z+2)  // Add to time.txt
 	{
-		scanf("%d",&arr[i]);
-		timeEval += 3;
+		int n,*arr,i;
+
+		// scanf("%d",&n); // scan number of elements in the input	
+		n = z;
+		arr = (int *)malloc(n * sizeof(int));
+
+		fprintf(fp,"%d ",n);
+
+		// for (i = 0;i < n; ++i)
+		// {
+		// 	scanf("%d",&arr[i]);
+		// 	timeEval += 3;
+		// }
+
+		for (i = 0;i<n;i++) {
+			arr[i] = i;
+		}
+
+		if(isMaxHeap(arr,0,n))
+		{
+			printf("The given sequence of numbers form a max heap.\n");
+		}
+		else if(isMinHeap(arr,0,n))
+		{
+			printf("The given sequence of numbers form a min heap.\n");
+		}
+		else
+		{
+			printf("The given sequence of numbers doesn't form a heap.\n");
+		}
+
+		timeEval = timeEval/(float)100000;
+		printf("The time taken for computation is %f\n",timeEval);
+
+		fprintf(fp,"%f\n",timeEval);
+		
 	}
 
-	if(isMaxHeap(arr,0,n))
-	{
-		printf("The given sequence of numbers form a max heap.\n");
-	}
-	else if(isMinHeap(arr,0,n))
-	{
-		printf("The given sequence of numbers form a min heap.\n");
-	}
-	else
-	{
-		printf("The given sequence of numbers doesn't form a heap.\n");
-	}
-
-	timeEval = timeEval/(float)100000;
-  	printf("The time taken for computation is %f\n",timeEval);
+	fclose(fp);
 
 	return 0;
 }
 
 int isMaxHeap(int *arr, int i, int n)
 {
-	if(i > (n-2)/2)
+	if(i >= (n-2)/2)
 	{
 		timeEval += 1;
 		return 1;		//if i is a leaf node, return true.
@@ -60,7 +78,7 @@ int isMaxHeap(int *arr, int i, int n)
 
 int isMinHeap(int *arr, int i, int n)
 {
-	if(i > (n-2)/2)
+	if(i >= (n-2)/2)
 	{
 		timeEval += 1;
 		return 1;		//if i is a leaf node, return true.
