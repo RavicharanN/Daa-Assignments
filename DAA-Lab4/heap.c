@@ -12,12 +12,10 @@ int main()
 	FILE * fp;
 	fp = fopen("time.txt","w");
 
-	for( z = 3;z<=70;z = z+2)  // Add to time.txt
-	{
 		int n,*arr,i;
 
-		// scanf("%d",&n); // scan number of elements in the input	
-		n = z;
+		scanf("%d",&n); // scan number of elements in the input	
+		// n = z;
 		arr = (int *)malloc(n * sizeof(int));
 
 		fprintf(fp,"%d ",n);
@@ -29,8 +27,10 @@ int main()
 		// }
 
 		for (i = 0;i<n;i++) {
-			arr[i] = i;
+			arr[i] = i;	
+			printf("%d ",arr[i] );
 		}
+		printf("\n");
 
 		if(isMaxHeap(arr,0,n))
 		{
@@ -50,7 +50,7 @@ int main()
 
 		fprintf(fp,"%f\n",timeEval);
 		
-	}
+
 
 	fclose(fp);
 
@@ -59,8 +59,15 @@ int main()
 
 int isMaxHeap(int *arr, int i, int n)
 {
-	if(i >= (n-2)/2)
+	if(n == 3)
 	{
+		if(arr[1] <= arr[0] && arr[2] <= arr[0]) 
+			return 1;
+	}
+	
+	if(n!=3 && i >= (n-2)/2)
+	{
+		printf("asda\n");
 		timeEval += 1;
 		return 1;		//if i is a leaf node, return true.
 	}
@@ -78,7 +85,13 @@ int isMaxHeap(int *arr, int i, int n)
 
 int isMinHeap(int *arr, int i, int n)
 {
-	if(i >= (n-2)/2)
+	if(n == 3)
+	{
+		if(arr[1] >= arr[0] && arr[2] >= arr[0]) 
+			return 1;
+	}
+
+	if(n!=3 && i >= (n-2)/2)
 	{
 		timeEval += 1;
 		return 1;		//if i is a leaf node, return true.
