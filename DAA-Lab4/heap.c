@@ -20,17 +20,17 @@ int main()
 
 		fprintf(fp,"%d ",n);
 
-		// for (i = 0;i < n; ++i)
-		// {
-		// 	scanf("%d",&arr[i]);
-		// 	timeEval += 3;
-		// }
-
-		for (i = 0;i<n;i++) {
-			arr[i] = i;	
-			printf("%d ",arr[i] );
+		for (i = 0;i < n; ++i)
+		{
+			scanf("%d",&arr[i]);
+			timeEval += 3;
 		}
-		printf("\n");
+
+		// for (i = 0;i<n;i++) {
+		// 	arr[i] = i;	
+		// 	printf("%d ",arr[i] );
+		// }
+		// printf("\n");
 
 		if(isMaxHeap(arr,0,n))
 		{
@@ -65,9 +65,8 @@ int isMaxHeap(int *arr, int i, int n)
 			return 1;
 	}
 	
-	if(n!=3 && i >= (n-2)/2)
+	if(n!=3 && i > (n-2)/2)
 	{
-		printf("asda\n");
 		timeEval += 1;
 		return 1;		//if i is a leaf node, return true.
 	}
@@ -91,7 +90,7 @@ int isMinHeap(int *arr, int i, int n)
 			return 1;
 	}
 
-	if(n!=3 && i >= (n-2)/2)
+	if(n!=3 && i > (n-2)/2)
 	{
 		timeEval += 1;
 		return 1;		//if i is a leaf node, return true.
