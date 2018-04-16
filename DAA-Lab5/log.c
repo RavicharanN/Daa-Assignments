@@ -21,7 +21,12 @@ int main()
 		for(i = 1; i <= k; i++)
 		{
 			sum += (1/(i * pow(x,i)));
+			if(i!=k)
+			printf("1/(%d*x^%d) + ",i,i);
+			else
+			printf("1/(%d*x^%d) \n",i,i);
 		}
+
 
 		printf("sum is %lf\n",sum);
 		printf("actual sum is %lf\n",ans);
